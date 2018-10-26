@@ -12,14 +12,14 @@ Gem::Specification.new do |s|
 
   s.metadata['allowed_push_host'] = 'https://rubygems.org'
 
-  
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+
+  s.files         = Dir["lib/**/*"]
+  s.test_files    = Dir["spec/**/*"]
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  
+
   s.required_ruby_version = '>= 2.2'
-  
+
   s.add_runtime_dependency "launchy"
   s.add_runtime_dependency 'her', '0.10.1'
 
