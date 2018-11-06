@@ -1,16 +1,4 @@
 RSpec.describe ShipStation do
-  it "raises configurations error if missing API key" do
-    ENV["SHIPSTATION_API_KEY"] = nil
-    ShipStation.username = nil
-    expect{ ShipStation.username }.to raise_error(ShipStation::ConfigurationError)
-  end
-
-  it "raises configurations error if missing API secret" do
-    ENV["SHIPSTATION_API_SECRET"] = nil
-    ShipStation.password = nil
-    expect{ ShipStation.password }.to raise_error(ShipStation::ConfigurationError)
-  end
-
   it "stores rate limiting information after each request" do
     stub_api_for(ShipStation::Order) do |stub|
       stub.get("/orders") do |env|

@@ -7,24 +7,33 @@ module ShipStation
   class << self
     extend ActiveSupport::Autoload
 
-    attr_writer :username
-    attr_writer :password
-
     attr_accessor :limit
     attr_accessor :remaining
     attr_accessor :reset_time
 
     def username
-      @username ||= ENV["SHIPSTATION_API_KEY"] or
-      raise(ConfigurationError, "Shipstation username not configured")
+      @username ||= ENV["SHIPSTATION_API_KEY"]
+    end
+
+    def username=(arg)
+      @username = arg
+      ShipStation::V1.setup
+      @password
     end
 
     def password
-      @password ||= ENV["SHIPSTATION_API_SECRET"] or
-      raise(ConfigurationError, "Shipstation password not configured")
+      @password ||= ENV["SHIPSTATION_API_SECRET"]
     end
+
+    def password=(arg)
+      @password = arg
+      ShipStation::V1.setup
+      @password
+    end
+
 
   end
 end
 
 SS = ShipStation
+SS::V1.setup if ShipStation.username && ShipStation.password

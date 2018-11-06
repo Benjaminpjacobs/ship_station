@@ -1,18 +1,23 @@
 module ShipStation
   module V1
     API = Her::API.new
-    API.setup url: "https://ssapi.shipstation.com" do |c|
-      #Authentication
-      c.use Faraday::Request::BasicAuthentication, ShipStation.username, ShipStation.password
 
-      # Request
-      c.use ShipStation::Middleware::JSONRequest
+    def self.setup
+      puts "Initializing API Setup"
+      API.setup url: "https://ssapi.shipstation.com" do |c|
+        #Authentication
+        c.use Faraday::Request::BasicAuthentication, ShipStation.username, ShipStation.password
 
-      # Response
-      c.use ShipStation::Middleware::ResponseParser
+        # Request
+        c.use ShipStation::Middleware::JSONRequest
 
-      # Adapter
-      c.use Faraday::Adapter::NetHttp
+        # Response
+        c.use ShipStation::Middleware::ResponseParser
+
+        # Adapter
+        c.use Faraday::Adapter::NetHttp
+      end
+      puts "API Setup Complete."
     end
   end
 end

@@ -8,6 +8,8 @@ module ShipStation
 
         errors = json.delete(:errors) || {}
         pagination = json.slice(:page, :pages, :total)
+
+        #change to new hash style
         {
           :data => json.except(:page, :pages, :total),
           :errors => errors,
@@ -33,11 +35,8 @@ module ShipStation
 
       # @private
       def call(env)
-        # puts "########Request Url############"
-        # puts env.url
-        # puts "###############################"
         unless env.method == :get
-          env[:body] = encode env[:body] unless env[:body].respond_to?(:to_str)
+          env[:body] = encode env[:body] unless env[:body].respond_to?(:to_s)
         end
         @app.call(env)
       end

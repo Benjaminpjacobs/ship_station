@@ -1,20 +1,35 @@
 module ShipStation
   class Model
-    Her::API.setup
     include Her::Model
     use_api V1::API
     parse_root_in_json true, format: :active_model_serializers
 
-    def self.associated
-      @associated ||= {}
-    end
+    class << self
+      %w(where find create new save_existing destroy_existing).each do |name|
+        define_method "#{name}" do |i|
+          raise(ConfigurationError, "Shipstation username not configured") if ShipStation.username.nil?
+          raise(ConfigurationError, "Shipstation password not configured") if ShipStation.password.nil?
+          super(i)
+        end
+      end
 
-    def self.shipstation_has_many(name, opts={})
-      self.associated[name] = opts.merge(:relationship  => :has_many)
-    end
+      def all
+        raise(ConfigurationError, "Shipstation username not configured") if ShipStation.username.nil?
+        raise(ConfigurationError, "Shipstation password not configured") if ShipStation.password.nil?
+        super
+      end
 
-    def self.shipstation_belongs_to(name, opts={})
-      self.associated[name] = opts.merge(:relationship  => :belongs_to)
+      def associated
+        @associated ||= {}
+      end
+
+      def shipstation_has_many(name, opts={})
+        associated[name] = opts.merge(:relationship  => :has_many)
+      end
+
+      def shipstation_belongs_to(name, opts={})
+        associated[name] = opts.merge(:relationship  => :belongs_to)
+      end
     end
 
     def method_missing(name, *args, &block)

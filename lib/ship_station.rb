@@ -6,9 +6,9 @@ require 'logger'
 require 'her'
 
 # App
-require 'ship_station/base'
-require 'ship_station/middleware'
 require 'ship_station/api'
+require 'ship_station/middleware'
+require 'ship_station/base'
 
 # Models
 require 'ship_station/api/model'

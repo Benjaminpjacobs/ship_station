@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ship_station (0.0.3)
+    ship_station (0.0.4)
       her (= 0.10.1)
 
 GEM
