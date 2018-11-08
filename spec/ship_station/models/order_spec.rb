@@ -60,6 +60,8 @@ RSpec.describe ShipStation::Order do
     Time.zone = "Eastern Time (US & Canada)"
     modifyDateEnd = 3.minutes.ago
     orders = ShipStation::Order.where(modifyDateEnd: modifyDateEnd)
-    expect(orders.params[:modifyDateEnd]).to be_a(Time)
+    parsed = orders.params[:modifyDateEnd]
+    expect(parsed).to be_a(String)
+    expect(parsed).to eq(modifyDateEnd.iso8601(3))
   end
 end

@@ -11,7 +11,7 @@ module ShipStation
           raise(ConfigurationError, "Shipstation password not configured") if ShipStation.password.nil?
           if i.is_a?(Hash)
             i.each do |key, value|
-              i[key] = value.to_time if value.is_a?(ActiveSupport::TimeWithZone)
+              i[key] = value.iso8601(3) if value.respond_to?(:iso8601)
             end
           end
           super(i)
