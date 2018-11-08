@@ -9,6 +9,11 @@ module ShipStation
         define_method "#{name}" do |i|
           raise(ConfigurationError, "Shipstation username not configured") if ShipStation.username.nil?
           raise(ConfigurationError, "Shipstation password not configured") if ShipStation.password.nil?
+          if i.is_a?(Hash)
+            i.each do |key, value|
+              i[key] = value.to_time if value.is_a?(ActiveSupport::TimeWithZone)
+            end
+          end
           super(i)
         end
       end

@@ -7,5 +7,6 @@ module ShipStation
       use_api V1::API
       super(args)
     end
+
   end
 end

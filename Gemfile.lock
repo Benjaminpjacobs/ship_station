@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    ship_station (0.0.4)
+    ship_station (0.0.5)
+      activesupport
       her (= 0.10.1)
 
 GEM
